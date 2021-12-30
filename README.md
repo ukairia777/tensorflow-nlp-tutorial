@@ -7,8 +7,9 @@ Tensorflow-NLP-tutorial
 
 e-book : https://wikidocs.net/book/2155
 
+
+# Colab 실습 방법
 ---
-**Colab 실습 방법**
 
 각 실습 파일의 py 파일을 열어보면 각 실습 파일의 Colab 링크를 기재해두었습니다.  
 해당 링크를 크롬 브라우저에 복사 + 붙여넣기 하시면 바로 실습이 가능합니다.
