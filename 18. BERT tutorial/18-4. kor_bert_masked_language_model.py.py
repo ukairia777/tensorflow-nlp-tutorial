@@ -46,37 +46,3 @@ pip('축구는 정말 재미있는 [MASK]다.')
 pip('어벤져스는 정말 재미있는 [MASK]다.')
 
 pip('나는 오늘 아침에 [MASK]에 출근을 했다.')
-
-"""# 멀티링구얼 BERT"""
-
-from transformers import TFBertForMaskedLM
-from transformers import AutoTokenizer
-
-model = TFBertForMaskedLM.from_pretrained('bert-base-multilingual-cased')
-
-tokenizer = AutoTokenizer.from_pretrained("bert-base-multilingual-cased")
-
-inputs = tokenizer('축구는 정말 재미있는 [MASK]다.', return_tensors='tf')
-
-tokenizer.cls_token_id
-
-tokenizer.sep_token_id
-
-tokenizer.mask_token_id
-
-print(inputs['input_ids'])
-
-print(inputs['token_type_ids'])
-
-print(inputs['attention_mask'])
-
-from transformers import FillMaskPipeline
-pip = FillMaskPipeline(model=model, tokenizer=tokenizer)
-
-pip('축구는 재미있는 [MASK]다.')
-
-pip('딸기는 맛있는 [MASK]다.')
-
-pip('이 영화는 정말 [MASK]다.')
-
-pip('나는 [MASK]에서 우유를 샀다.')
