@@ -1,11 +1,13 @@
-Tensorflow-NLP-tutorial
+# Tensorflow-NLP-tutorial
 ---
-
 위키독스 '딥 러닝을 이용한 자연어 처리 입문'의 자연어 처리 튜토리얼 저장소입니다.
 
 코드에 대한 상세 설명은 e-book을 참고바랍니다.
 
 e-book : https://wikidocs.net/book/2155
+
+## 최신 업데이트 공지
+2021년 12월 31일자로 깃허브 링크를 오픈하였습니다.
 
 
 ## Colab 실습 방법
