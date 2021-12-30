@@ -24,9 +24,9 @@ doc1 = np.array([0,1,1,1])
 doc2 = np.array([1,0,1,1])
 doc3 = np.array([2,0,2,2])
 
-print(cos_sim(doc1, doc2)) #문서1과 문서2의 코사인 유사도
-print(cos_sim(doc1, doc3)) #문서1과 문서3의 코사인 유사도
-print(cos_sim(doc2, doc3)) #문서2과 문서3의 코사인 유사도
+print('문서 1과 문서2의 유사도 :',cos_sim(doc1, doc2))
+print('문서 1과 문서3의 유사도 :',cos_sim(doc1, doc3))
+print('문서 2와 문서3의 유사도 :',cos_sim(doc2, doc3))
 
 """# 2. 유사도를 이용한 추천 시스템 구현하기"""
 
@@ -39,41 +39,35 @@ data.head(2)
 
 data = data.head(20000)
 
-data['overview'].isnull().sum()
+print('overview 열의 결측값의 수:',data['overview'].isnull().sum())
 
-# overview에서 Null 값을 가진 경우에는 Null 값을 제거
 data['overview'] = data['overview'].fillna('')
 
-# overview에 대해서 tf-idf 수행
 tfidf = TfidfVectorizer(stop_words='english')
 tfidf_matrix = tfidf.fit_transform(data['overview'])
-print(tfidf_matrix.shape)
+print('TF-IDF 행렬의 크기(shape) :',tfidf_matrix.shape)
 
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
-indices = pd.Series(data.index, index=data['title']).drop_duplicates()
-print(indices.head())
+print('코사인 유사도 연산 결과 :',cosine_sim.shape)
 
-idx = indices['Father of the Bride Part II']
+title_to_index = dict(zip(data['title'], data.index))
+
+idx = title_to_index['Father of the Bride Part II']
 print(idx)
 
 def get_recommendations(title, cosine_sim=cosine_sim):
-    # 선택한 영화의 타이틀로부터 해당되는 인덱스를 받아옵니다. 이제 선택한 영화를 가지고 연산할 수 있습니다.
-    idx = indices[title]
+    idx = title_to_index[title]
 
-    # 모든 영화에 대해서 해당 영화와의 유사도를 구합니다.
     sim_scores = list(enumerate(cosine_sim[idx]))
 
-    # 유사도에 따라 영화들을 정렬합니다.
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
-    # 가장 유사한 10개의 영화를 받아옵니다.
     sim_scores = sim_scores[1:11]
 
-    # 가장 유사한 10개의 영화의 인덱스를 받아옵니다.
-    movie_indices = [i[0] for i in sim_scores]
+    movie_indices = [idx[0] for idx in sim_scores]
 
-    # 가장 유사한 10개의 영화의 제목을 리턴합니다.
     return data['title'].iloc[movie_indices]
 
 get_recommendations('The Dark Knight Rises')
+
