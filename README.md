@@ -5,3 +5,7 @@ Tensorflow-NLP-tutorial
 코드에 대한 상세 설명은 e-book을 참고바랍니다.
 
 e-book : https://wikidocs.net/book/2155
+
+---
+
+각 실습 파일의 py 파일을 열어보면 각 실습 파일의 Colab link를 기재해두었습니다.
