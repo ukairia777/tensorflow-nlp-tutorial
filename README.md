@@ -1,5 +1,7 @@
 # Tensorflow-NLP-tutorial
 
+This repository provides tutorial code for deep learning researchers to learn Tensorflow.
+
 위키독스 **딥 러닝을 이용한 자연어 처리 입문** 의 자연어 처리 튜토리얼 저장소입니다.  
 기본적으로 딥 러닝 프레임워크 Tensorflow 2.0+을 사용하고 있습니다.  
 
