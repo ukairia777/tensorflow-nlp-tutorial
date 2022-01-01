@@ -11,7 +11,7 @@ A list of NLP(Natural Language Processing) tutorials built on Tensorflow 2.0.
 
 e-book : https://wikidocs.net/book/2155
 
-많은 딥 러닝 또는 자연어 처리 입문자들에게 도움이 되기를 바랍니다.
+딥 러닝 또는 자연어 처리 입문자들에게 도움이 되었으면 좋겠습니다.
 
 ## Colab 실습 방법
 
