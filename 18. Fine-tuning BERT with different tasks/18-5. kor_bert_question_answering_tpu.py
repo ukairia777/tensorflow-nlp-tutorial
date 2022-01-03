@@ -169,9 +169,10 @@ class TFBertForQuestionAnswering(tf.keras.Model):
 
 # 신규
 with strategy.scope():
-  model = TFBertForQuestionAnswering("korea/bert-base")
+  model = TFBertForQuestionAnswering("klue/bert-base")
+  optimizer = tf.keras.optimizers.Adam(learning_rate=5e-5)
   loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
-  model.compile(optimizer=optimizer, loss=model.compute_loss)
+  model.compile(optimizer=optimizer, loss=loss)
 
 history = model.fit(
     X_train,
@@ -180,3 +181,20 @@ history = model.fit(
     verbose=1,
     batch_size=16,
 )
+
+def predict_test_data_by_idx(idx):
+  context = tokenizer.decode(X_test[0][idx]).split('[SEP] ')[0]
+  question = tokenizer.decode(X_test[0][idx]).split('[SEP] ')[1]
+  print('본문 :', context)
+  print('질문 :', question)
+  answer_encoded = X_test[0][idx][y_test[0][idx]:y_test[1][idx]+1]
+  print('정답 :',tokenizer.decode(answer_encoded))
+  output = model([tf.constant(X_test[0][idx])[None, :], tf.constant(X_test[1][idx])[None, :]])
+  start = tf.math.argmax(tf.squeeze(output[0]))
+  end = tf.math.argmax(tf.squeeze(output[1]))+1
+  answer_encoded = X_test[0][idx][start:end]
+  print('예측 :',tokenizer.decode(answer_encoded))
+  print('----------------------------------------')
+
+for i in range(0, 100):
+  predict_test_data_by_idx(i)
