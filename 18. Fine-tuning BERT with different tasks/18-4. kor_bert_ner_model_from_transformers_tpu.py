@@ -239,11 +239,6 @@ def ner_prediction(examples, max_seq_len, tokenizer):
 
   for i in range(0, len(label_masks)):
     pred_tag = []
-
-    # ex) 모델의 예측값 디코딩 과정
-    # 예측값(y_predicted)에서 레이블 마스크(label_masks)의 값이 -100인 동일 위치의 값을 삭제
-    # label_masks : [-100 0 -100 0 -100]
-    # y_predicted : [  0  1   0  2   0 ] ==> [1 2] ==> 최종 예측(pred_tag) : [PER-B PER-I]
     for label_index, pred_index in zip(label_masks[i], y_predicted[i]):
       if label_index != -100:
         pred_tag.append(index_to_tag[pred_index])
