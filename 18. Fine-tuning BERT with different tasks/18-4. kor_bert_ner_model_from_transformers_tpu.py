@@ -147,9 +147,6 @@ class F1score(tf.keras.callbacks.Callback):
         label_tag = []
         pred_tag = []
 
-        # 레이블의 값이 -100인 경우는 F1 score 계산 시에도 제외
-        # ex) 레이블 디코딩 과정
-        # label_index : [1 -100 2 -100] ===> [1 2] ===> label_tag : [PER-B PER-I]
         for label_index, pred_index in zip(label_ids[i], pred_ids[i]):
           if label_index != -100:
             label_tag.append(index_to_tag[label_index])
@@ -160,12 +157,8 @@ class F1score(tf.keras.callbacks.Callback):
 
       return label_list, pred_list
 
-    # 에포크가 끝날 때마다 실행되는 함수}
     def on_epoch_end(self, epoch, logs={}):
       y_predicted = self.model.predict(self.X_test)
-
-      # from transformers import TFBertForTokenClassification를 사용할 경우
-      # y_predicted가 아닌 y_predicted.logits으로 접근해야함에 주의.
       y_predicted = np.argmax(y_predicted.logits, axis = 2)
 
       label_list, pred_list = self.sequences_to_tags(self.y_test, y_predicted)
@@ -195,48 +188,25 @@ def convert_examples_to_features_for_prediction(examples, max_seq_len, tokenizer
         tokens = []
         label_mask = []
         for one_word in example:
-            # 하나의 단어에 대해서 서브워드로 토큰화
             subword_tokens = tokenizer.tokenize(one_word)
             tokens.extend(subword_tokens)
-            # 서브워드 중 첫번째 서브워드를 제외하고 그 뒤의 서브워드들은 -100으로 채운다.
             label_mask.extend([0]+ [pad_token_id_for_label] * (len(subword_tokens) - 1))
 
-        # [CLS]와 [SEP]를 후에 추가할 것을 고려하여 최대 길이를 초과하는 샘플의 경우 max_seq_len - 2의 길이로 변환.
-        # ex) max_seq_len = 64라면 길이가 62보다 긴 샘플은 뒷 부분을 자르고 길이 62로 변환.
         special_tokens_count = 2
         if len(tokens) > max_seq_len - special_tokens_count:
             tokens = tokens[:(max_seq_len - special_tokens_count)]
             label_mask = label_mask[:(max_seq_len - special_tokens_count)]
 
-        # [SEP]를 추가하는 코드
-        # 1. 토큰화 결과의 맨 뒷 부분에 [SEP] 토큰 추가
-        # 2. 레이블에도 맨 뒷 부분에 -100 추가.
         tokens += [sep_token]
         label_mask += [pad_token_id_for_label]
-
-        # [CLS]를 추가하는 코드
-        # 1. 토큰화 결과의 앞 부분에 [CLS] 토큰 추가
-        # 2. 레이블의 맨 앞 부분에도 -100 추가.
         tokens = [cls_token] + tokens
         label_mask = [pad_token_id_for_label] + label_mask
-
-        # 정수 인코딩
         input_id = tokenizer.convert_tokens_to_ids(tokens)
-
-        # 어텐션 마스크 생성
         attention_mask = [1] * len(input_id)
-
-        # 정수 인코딩에 추가할 패딩 길이 연산
         padding_count = max_seq_len - len(input_id)
-
-        # 정수 인코딩, 어텐션 마스크에 패딩 추가
         input_id = input_id + ([pad_token_id] * padding_count)
         attention_mask = attention_mask + ([0] * padding_count)
-
-        # 세그먼트 인코딩.
         token_type_id = [pad_token_id_for_segment] * max_seq_len
-
-        # 레이블 패딩. (단, 이 경우는 패딩 토큰의 ID가 -100)
         label_mask = label_mask + ([pad_token_id_for_label] * padding_count)
 
         assert len(input_id) == max_seq_len, "Error with input length {} vs {}".format(len(input_id), max_seq_len)
