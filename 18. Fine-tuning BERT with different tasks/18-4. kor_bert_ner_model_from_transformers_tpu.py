@@ -60,44 +60,6 @@ print('개체명 태깅 정보의 개수 :',tag_size)
 
 tokenizer = BertTokenizer.from_pretrained("klue/bert-base")
 
-sent = train_data_sentence[1]
-label = train_data_label[1]
-
-print('문장 :', sent)
-print('레이블 :',label)
-print('레이블의 정수 인코딩 :',[tag_to_index[idx] for idx in label])
-print('문장의 길이 :', len(sent))
-print('레이블의 길이 :', len(label))
-
-tokens = []
-
-for one_word in sent:
-  # 각 단어에 대해서 서브워드로 분리.
-  # ex) one_word = '쿠마리' ===> subword_tokens = ['쿠', '##마리']
-  # ex) one_word = '한동수가' ===> subword_tokens = ['한동', '##수', '##가']
-  subword_tokens = tokenizer.tokenize(one_word)
-  tokens.extend(subword_tokens)
-
-print('BERT 토크나이저 적용 후 문장 :',tokens)
-print('레이블 :', label)
-print('레이블의 정수 인코딩 :',[tag_to_index[idx] for idx in label])
-print('문장의 길이 :', len(tokens))
-print('레이블의 길이 :', len(label))
-
-tokens = []
-labels_ids = []
-
-for one_word, label_token in zip(train_data_sentence[1], train_data_label[1]):
-  subword_tokens = tokenizer.tokenize(one_word)
-  tokens.extend(subword_tokens)
-  labels_ids.extend([tag_to_index[label_token]]+ [-100] * (len(subword_tokens) - 1))
-
-print('토큰화 후 문장 :',tokens)
-print('레이블 :', ['[PAD]' if idx == -100 else index_to_tag[idx] for idx in labels_ids])
-print('레이블의 정수 인코딩 :', labels_ids)
-print('문장의 길이 :', len(tokens))
-print('레이블의 길이 :', len(labels_ids))
-
 """# 3. 전처리"""
 
 def convert_examples_to_features(examples, labels, max_seq_len, tokenizer,
@@ -295,11 +257,6 @@ def convert_examples_to_features_for_prediction(examples, max_seq_len, tokenizer
     return (input_ids, attention_masks, token_type_ids), label_masks
 
 X_pred, label_masks = convert_examples_to_features_for_prediction(test_data_sentence[:5], max_seq_len=128, tokenizer=tokenizer)
-
-print('기존 원문 :', test_data_sentence[0])
-print('-' * 50)
-print('토큰화 후 원문 :', [tokenizer.decode([word]) for word in X_pred[0][0]])
-print('레이블 마스크 :', ['[PAD]' if idx == -100 else '[FIRST]' for idx in label_masks[0]])
 
 def ner_prediction(examples, max_seq_len, tokenizer):
   examples = [sent.split() for sent in examples]
