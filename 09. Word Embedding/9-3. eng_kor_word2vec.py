@@ -27,7 +27,7 @@ import re
 from nltk.tokenize import word_tokenize, sent_tokenize
 
 # 데이터 다운로드
-urllib.request.urlretrieve("https://raw.githubusercontent.com/GaoleMeng/RNN-and-FFNN-textClassification/master/ted_en-20160408.xml", filename="ted_en-20160408.xml")
+urllib.request.urlretrieve("https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/09.%20Word%20Embedding/dataset/ted_en-20160408.xml", filename="ted_en-20160408.xml")
 
 targetXML = open('ted_en-20160408.xml', 'r', encoding='UTF8')
 target_text = etree.parse(targetXML)
@@ -62,7 +62,7 @@ from gensim.models import KeyedVectors
 
 model = Word2Vec(sentences=result, size=100, window=5, min_count=5, workers=4, sg=0)
 
-"""여기서 Word2Vec의 하이퍼파라미터값은 다음과 같습니다.  
+"""여기서 Word2Vec의 인자는 다음과 같습니다.  
 
 * size = 워드 벡터의 특징 값. 즉, 임베딩 된 벡터의 차원.
 * window = 컨텍스트 윈도우 크기

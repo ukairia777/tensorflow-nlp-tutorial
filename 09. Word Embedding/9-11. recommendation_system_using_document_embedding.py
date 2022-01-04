@@ -35,7 +35,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 nltk.download('stopwords')
 
-urllib.request.urlretrieve("https://raw.githubusercontent.com/sdhilip200/Content-Based-Recommendation---Good-Reads-data/master/data.csv", filename="data.csv")
+urllib.request.urlretrieve("https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/09.%20Word%20Embedding/dataset/data.csv", filename="data.csv")
 
 df = pd.read_csv("data.csv")
 
@@ -61,7 +61,6 @@ def remove_html(text):
     return html_pattern.sub(r'', text)
 
 def remove_punctuation(text):
-    # tokenizer = RegexpTokenizer(r'\w+')
     tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
     text = tokenizer.tokenize(text)
     text = " ".join(text)
