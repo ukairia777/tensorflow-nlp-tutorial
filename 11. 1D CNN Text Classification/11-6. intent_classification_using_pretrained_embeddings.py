@@ -22,11 +22,15 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import urllib.request
 from sklearn import preprocessing
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
 from sklearn.metrics import classification_report
+
+urllib.request.urlretrieve("https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/11.%201D%20CNN%20Text%20Classification/dataset/intent_train_data.csv", filename="intent_train_data.csv")
+urllib.request.urlretrieve("https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/11.%201D%20CNN%20Text%20Classification/dataset/intent_test_data.csv", filename="intent_test_data.csv")
 
 train_data = pd.read_csv('intent_train_data.csv')
 test_data = pd.read_csv('intent_test_data.csv')
