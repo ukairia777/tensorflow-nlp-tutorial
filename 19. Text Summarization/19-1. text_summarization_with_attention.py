@@ -355,10 +355,7 @@ decoder_softmax_outputs = decoder_softmax_layer(decoder_outputs)
 model = Model([encoder_inputs, decoder_inputs], decoder_softmax_outputs)
 model.summary()
 
-import urllib.request
-urllib.request.urlretrieve("https://raw.githubusercontent.com/thushv89/attention_keras/master/src/layers/attention.py", filename="attention.py")
-
-"""아래의 Attention Layer는 위 페이지를 참고하여 수정하였습니다."""
+"""바다나우 어텐션을 구현합니다."""
 
 import tensorflow as tf
 import os
@@ -477,8 +474,6 @@ class AttentionLayer(Layer):
             tf.TensorShape((input_shape[1][0], input_shape[1][1], input_shape[1][2])),
             tf.TensorShape((input_shape[1][0], input_shape[1][1], input_shape[0][1]))
         ]
-
-"""타인이 구현한 어텐션 레이어를 그대로 사용해봅시다."""
 
 # 어텐션 층(어텐션 함수)
 attn_layer = AttentionLayer(name='attention_layer')
