@@ -14,15 +14,18 @@ Original file is located at
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import urllib.request
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 
 """# 1. 아이리스 품종 데이터에 대한 이해"""
 
-data = pd.read_csv('/content/Iris.csv', encoding='latin1')
+urllib.request.urlretrieve("https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/06.%20Machine%20Learning/dataset/Iris.csv", filename="Iris.csv")
 
-print('샘플의 개수 :', len(data)) # 총 샘플의 개수 출력
-print(data[:5]) # 샘플 중 5개 출력
+data = pd.read_csv('Iris.csv', encoding='latin1')
+
+print('샘플의 개수 :', len(data))
+print(data[:5])
 
 # 중복을 허용하지 않고, 있는 데이터의 모든 종류를 출력
 print("품종 종류:", data["Species"].unique(), sep="\n")
