@@ -1,5 +1,5 @@
 # Tensorflow-NLP-tutorial
-다음의 안내를 읽어보고 실습을 진행해주시면 코드 이해에 더 도움이 됩니다.
+다음의 안내를 읽어보고 실습을 진행해보세요.
 
 # 1. model_from_transformers  
 
