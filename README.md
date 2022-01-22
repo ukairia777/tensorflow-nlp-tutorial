@@ -9,7 +9,7 @@ A list of NLP(Natural Language Processing) tutorials built on Tensorflow 2.0.
 
 코드의 기반이 되는 이론적인 설명은 700페이지 분량의 eBook(무료)을 통해 작성 및 공개하였습니다.
 
-eook : https://wikidocs.net/book/2155
+eBook : https://wikidocs.net/book/2155
 
 ## Colab 실습 방법
 
