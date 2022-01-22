@@ -7,7 +7,7 @@ A list of NLP(Natural Language Processing) tutorials built on Tensorflow 2.0.
 
 ![자연어처리_상단_책](https://user-images.githubusercontent.com/73151616/147765192-632448c4-2b96-4df4-9d4d-ef34271f295b.png)
 
-코드의 기반이 되는 이론적인 설명은 무료 e-book을 참고바랍니다.
+코드의 기반이 되는 이론적인 설명은 700페이지 분량의 무료 e-book을 참고바랍니다.
 
 e-book : https://wikidocs.net/book/2155
 
