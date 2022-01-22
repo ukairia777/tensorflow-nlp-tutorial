@@ -32,6 +32,6 @@ model = TFBertForQuestionAnswering.from_pretrained('모델 이름')
 
 모든 TPU 코드는 아래의 링크를 참고하여 작성되었습니다.  
 아래 링크에서 안내하는 TPU 코드만 제거하면 TPU 실습 코드를 GPU 실습 코드로 변경할 수 있습니다.  
-다시 말해 파일명이 tpu로 끝나는 파일에서 아래의 링크에서 설명하는 코드들을 전부 제거하면 GPU에서 실습해도 됩니다.  
+다시 말해 파일명이 tpu로 끝나는 파일에서 아래의 링크에서 설명하는 코드들을 전부 제거하면 GPU 환경에서 실습가능합니다.  
 
 링크 : https://wikidocs.net/119990
