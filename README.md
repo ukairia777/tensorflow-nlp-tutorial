@@ -24,4 +24,4 @@ eBook : https://wikidocs.net/book/2155
 * 2022년 01월 18일 : 22챕터 - **KoGPT-2** 텍스트 생성, 챗봇, 텍스트 분류 실습 코드 추가.
 * 2022년 01월 20일 : 19챕터 - BERT를 이용한 키워드 추출 **키버트(KeyBERT)** 실습 코드 추가.
 * 2022년 02월 16일 : 19챕터 - BERT를 이용한 복합 토픽 모델링 **Combined Topic Models, CTM** 실습 코드 추가.
-* 2022년 02월 24일 : 19챕터 - **Combined Topic Models, CTM 한국어**, **BERTopic 영어, 한국어** 실습 코드 추가.
+* 2022년 02월 24일 : 19챕터 - **CTM 한국어**, **BERTopic 영어, 한국어** 실습 코드 추가.
