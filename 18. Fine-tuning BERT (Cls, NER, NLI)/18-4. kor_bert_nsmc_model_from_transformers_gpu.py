@@ -122,9 +122,9 @@ from tensorflow.keras.callbacks import EarlyStopping
 optimizer = tf.keras.optimizers.Adam(learning_rate=5e-5)
 
 model = TFBertForSequenceClassification.from_pretrained("klue/bert-base", num_labels=2, from_pt=True)
-model.compile(optimizer=optimizer, loss=model.compute_loss, metrics=['accuracy'])
+model.compile(optimizer=optimizer, loss=model.hf_compute_loss, metrics=['accuracy'])
 
-model.compute_loss
+model.hf_compute_loss
 
 callback_earlystop = EarlyStopping(
     monitor="val_accuracy", 

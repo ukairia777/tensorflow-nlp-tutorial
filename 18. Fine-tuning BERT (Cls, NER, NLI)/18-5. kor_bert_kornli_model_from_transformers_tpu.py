@@ -144,7 +144,7 @@ strategy = tf.distribute.experimental.TPUStrategy(resolver)
 with strategy.scope():
   model = TFBertForSequenceClassification.from_pretrained("klue/bert-base", num_labels=3, from_pt=True)
   optimizer = tf.keras.optimizers.Adam(learning_rate=5e-5)
-  model.compile(optimizer=optimizer, loss=model.compute_loss, metrics = ['accuracy'])
+  model.compile(optimizer=optimizer, loss=model.hf_compute_loss, metrics = ['accuracy'])
 
 early_stopping = EarlyStopping(
     monitor="val_accuracy", 

@@ -132,7 +132,7 @@ strategy = tf.distribute.experimental.TPUStrategy(resolver)
 with strategy.scope():
   model = TFBertForTokenClassification.from_pretrained("klue/bert-base", num_labels=tag_size, from_pt=True)
   optimizer = tf.keras.optimizers.Adam(learning_rate=5e-5)
-  model.compile(optimizer=optimizer, loss=model.compute_loss)
+  model.compile(optimizer=optimizer, loss=model.hf_compute_loss)
 
 class F1score(tf.keras.callbacks.Callback):
     def __init__(self, X_test, y_test):
