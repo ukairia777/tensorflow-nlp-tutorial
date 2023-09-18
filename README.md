@@ -5,13 +5,14 @@ A list of NLP(Natural Language Processing) tutorials built on Tensorflow 2.0.
 위키독스 **딥 러닝을 이용한 자연어 처리 입문** 의 자연어 처리 튜토리얼 저장소입니다.  
 기본적으로 딥 러닝 프레임워크 Tensorflow 2.0+을 사용하고 있습니다.  
 
-![표지](https://github.com/ukairia777/tensorflow-nlp-tutorial/assets/73151616/54a25464-001f-44bb-af72-a3ffe3850cfd)
+![표지](https://github.com/ukairia777/tensorflow-nlp-tutorial/assets/73151616/024d874b-346e-4186-80bc-59ea37d8634a)
 
 ![자연어처리_상단_책](https://user-images.githubusercontent.com/73151616/147765192-632448c4-2b96-4df4-9d4d-ef34271f295b.png)
 
 코드의 기반이 되는 이론적인 설명은 1,000페이지 분량의 e-Book을 통해 작성 및 공개하였습니다.
 
 e-Book : https://wikidocs.net/book/2155
+
 
 ## Colab 실습 방법
 
