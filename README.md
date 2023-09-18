@@ -5,7 +5,7 @@ A list of NLP(Natural Language Processing) tutorials built on Tensorflow 2.0.
 위키독스 **딥 러닝을 이용한 자연어 처리 입문** 의 자연어 처리 튜토리얼 저장소입니다.  
 기본적으로 딥 러닝 프레임워크 Tensorflow 2.0+을 사용하고 있습니다.  
 
-<img src="https://wikidocs.net/images/page/37127/%ED%91%9C%EC%A7%80.png" width="200">
+<img src="https://wikidocs.net/images/page/37127/%ED%91%9C%EC%A7%80.png" width="500">
 
 코드의 기반이 되는 이론적인 설명은 1,000페이지 분량의 e-Book을 통해 작성 및 공개하였습니다.
 
