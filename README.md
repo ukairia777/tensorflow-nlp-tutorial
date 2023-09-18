@@ -7,7 +7,7 @@ A list of NLP(Natural Language Processing) tutorials built on Tensorflow 2.0.
 
 ![표지](https://github.com/ukairia777/tensorflow-nlp-tutorial/assets/73151616/ed579147-8679-40b8-9c21-727411f93a4f|width=10)
 
-<img src=(https://wikidocs.net/images/page/37127/%ED%91%9C%EC%A7%80.png" width="48">
+<img src="https://wikidocs.net/images/page/37127/%ED%91%9C%EC%A7%80.png" width="48">
 
 코드의 기반이 되는 이론적인 설명은 1,000페이지 분량의 e-Book을 통해 작성 및 공개하였습니다.
 
