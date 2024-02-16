@@ -6,7 +6,7 @@ import torch
 from datasets import load_dataset #, Dataset
 from peft import LoraConfig, get_peft_model
 from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
-from trl import DPOTrainer
+from trl import SFTTrainer
 import bitsandbytes as bnb
 
 def find_all_linear_names(model):
@@ -32,11 +32,12 @@ def print_trainable_parameters(model):
       f"trainable params: {trainable_params} || all params: {all_param} || trainables%: {100 * trainable_params / all_param}"
   )
 
+
 def train(
     # model/data params
     base_model: str = "",
-    data_path: str = "",
-    output_dir: str = "",
+    data_path: str = "conversations.json",
+    output_dir: str = "./results",
     # training hyperparams
     batch_size: int = 128,
     micro_batch_size: int = 8,
@@ -77,17 +78,15 @@ def train(
     # login(token='[...your_token...]')
     
     gradient_accumulation_steps = batch_size // micro_batch_size
-
     device_map = "auto"
 
-    # 1. Define policy and reference models
-    model = AutoModelForCausalLM.from_pretrained(
-        base_model, # location of saved SFT model
-        low_cpu_mem_usage=True,
-        torch_dtype=torch.float16,
-        device_map = device_map
-    )
-    tokenizer = AutoTokenizer.from_pretrained(base_model)
+    dataset = load_dataset("json", data_files=data_path, split="train")
+
+    base_model = AutoModelForCausalLM.from_pretrained(base_model, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16)
+    # base_model.config.use_cache = False
+    # base_model = prepare_model_for_kbit_training(base_model)
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
     print(type(model))
     print(model)
     print("length of tokenizer:",len(tokenizer))
@@ -99,6 +98,10 @@ def train(
 
     # tokenizer.pad_token_id = 0
     tokenizer.padding_side = "right"
+    '''
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "right"  # Fix weird overflow issue with fp16 training
+    '''
 
     # 2. Define dataset
     def return_prompt_and_responses(samples):
@@ -108,19 +111,8 @@ def train(
             "rejected": samples["rejected"],
         }
 
-    dataset = load_dataset(data_path)
-    train_dataset = dataset.map(return_prompt_and_responses)
-    train_dataset = train_dataset.filter(
-        lambda x: len(x["prompt"]) + len(x["chosen"]) <= cutoff_len
-        and len(x["prompt"]) + len(x["rejected"]) <= cutoff_len
-    )
-    train_dataset = train_dataset["train"].shuffle()
-    print('### 첫번째 샘플 출력 ###')
-    print(train_dataset['prompt'][0])
-    print(train_dataset['chosen'][0])
-    print(train_dataset['rejected'][0])
-    
-    # 3. Define hyperparameters
+
+    # Parameters for training arguments details => https://github.com/huggingface/transformers/blob/main/src/transformers/training_args.py#L158
     training_args = TrainingArguments(
         num_train_epochs= num_epochs,
         per_device_train_batch_size=micro_batch_size,
@@ -134,42 +126,37 @@ def train(
         warmup_ratio=warmup_ratio,
         optim='paged_adamw_32bit',
         bf16=True,
-        # remove_unused_columns=False,
-        run_name="dpo_trainer",
+        run_name="sft_trainer",
     )
 
+    # Change the LORA hyperparameters accordingly to fit your use case
     peft_config = LoraConfig(
-        r=lora_r,
-        lora_alpha=lora_alpha,
-        lora_dropout=lora_dropout,
-        # target_modules=lora_target_modules,
-        target_modules=find_all_linear_names(model),
+        r=128,
+        lora_alpha=16,
+        target_modules=find_all_linear_names(base_model),
+        lora_dropout=0.05,
         bias="none",
         task_type="CAUSAL_LM",
     )
-    model = get_peft_model(model, peft_config)
+
+    model = get_peft_model(base_model, peft_config)
     print_trainable_parameters(model)
-    
-    # DPO trainer
-    dpo_trainer = DPOTrainer(
-        model,
-        ref_model=None,
-        args=training_args,
-        beta=0.1,
-        train_dataset=train_dataset,
+
+    sft_trainer = SFTTrainer(
+        base_model,
+        train_dataset=dataset,
         tokenizer=tokenizer,
+        max_seq_length=cutoff_len,
+        formatting_func=return_prompt_and_responses,
+        args=training_args
     )
 
-    if torch.__version__ >= "2" and sys.platform != "win32":
-        model = torch.compile(model)
+    sft_trainer.train() 
+    sft_trainer.save_model(output_dir)
 
-    # train
-    dpo_trainer.train()
-    dpo_trainer.save_model(output_dir)
-
-    # save
     output_dir = os.path.join(output_dir, "final_checkpoint")
-    dpo_trainer.model.save_pretrained(output_dir)
+    sft_trainer.model.save_pretrained(output_dir)
+    tokenizer.save_pretrained(output_dir)
 
 if __name__ == "__main__":
     torch.cuda.empty_cache() 
