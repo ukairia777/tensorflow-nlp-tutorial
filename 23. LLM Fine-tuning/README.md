@@ -130,9 +130,26 @@ Below is an instruction that describes a task, paired with an input that provide
 ```
 범의 전령 매화부터 유채꽃까지... 전국 유명산·유원지 북적
 ```
-### 5. Test
+### 5. Inference
+- 학습한 모델을 불러와서 테스트합니다.
 ```
+import torch.nn as nn
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
+model = AutoModelForCausalLM.from_pretrained('./output_dir')
+tokenizer = AutoTokenizer.from_pretrained('./output_dir')
+
+model.eval()
+inputs = tokenizer(input_text, return_tensors="pt")
+model = nn.DataParallel(model)
+model.cuda()
+
+eos_token_id = tokenizer.eod_token_id
+
+with torch.no_grad():
+    outputs = model.module.generate(input_ids=inputs["input_ids"].to("cuda"), max_new_tokens=512, eos_token_id=eos_token_id)
+    print(tokenizer.batch_decode(outputs.detach().cpu().numpy(), skip_special_tokens=True)[0])
 ```
 
 ### 6. Merge
