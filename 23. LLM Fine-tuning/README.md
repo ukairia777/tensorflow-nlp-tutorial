@@ -132,7 +132,7 @@ inputs = tokenizer(input_text, return_tensors="pt")
 model = nn.DataParallel(model)
 model.cuda()
 
-eos_token_id = tokenizer.eod_token_id
+eos_token_id = tokenizer.eos_token_id
 
 with torch.no_grad():
     outputs = model.module.generate(input_ids=inputs["input_ids"].to("cuda"), max_new_tokens=512, eos_token_id=eos_token_id)
