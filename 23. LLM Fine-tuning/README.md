@@ -1,5 +1,6 @@
 - 구글의 Colab은 LLM을 튜닝하기에는 현실적으로 리소스 문제가 있습니다.
 - [runpod](https://www.runpod.io/console/gpu-cloud) 서비스를 사용하기를 권장합니다.
+- 딥스피드를 이용한 학습은 [라마팩토리](https://github.com/ukairia777/LLaMA-Factory) 참고.
 
 ```
 !wget https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/23.%20LLM%20Fine-tuning/sft-trainer.py
