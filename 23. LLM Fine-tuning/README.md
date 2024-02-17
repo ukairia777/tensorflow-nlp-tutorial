@@ -7,6 +7,7 @@ pip install -r requirements.txt
 ```
 
 ## SFT-LoRA
+### 1. 학습 스크립트
 ```
 !torchrun --nproc_per_node=4 --master_port=1234 sft-trainer.py \
     --base_model beomi/llama-2-ko-7b \
@@ -28,5 +29,8 @@ pip install -r requirements.txt
     --lr_scheduler 'linear' \
     --warmup_steps 100
 ```
+
+### 2. 템플릿
+- sft-trainer.py안에 있는 `generate_and_tokenize_prompt` 함수를 수정하여 여러분만의 프롬프트 템플릿을 만들어야 합니다.
 
 ## DPO
