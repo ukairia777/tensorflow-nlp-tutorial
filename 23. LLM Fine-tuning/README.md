@@ -89,7 +89,7 @@ Below is an instruction that describes a task, paired with an input that provide
 {title}
 ```
 
-### 3-2. 입력과 출력 완성
+#### 3-2. 입력과 출력 완성
 - 위 템플릿에 따라서 만들어진 데이터 예시는 다음과 같습니다.
 - 모델의 입력
 ```
