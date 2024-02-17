@@ -154,6 +154,7 @@ def train(
 
         return result
 
+    '''
     def generate_and_tokenize_prompt(data_point):
         document = data_point["document"]
         output = data_point["title"]
@@ -209,7 +210,6 @@ def train(
                 user_prompt_len:
             ]
         return tokenized_full_prompt
-    '''
 
     model = prepare_model_for_int8_training(model)
 
