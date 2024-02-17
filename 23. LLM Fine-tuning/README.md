@@ -132,3 +132,22 @@ Below is an instruction that describes a task, paired with an input that provide
 ```
 
 ## DPO
+```
+!wget https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/23.%20LLM%20Fine-tuning/dpo-trainer.py
+!python dpo-trainer.py \
+    --base_model Qwen/Qwen1.5-72B \
+    --data-path  Intel/orca_dpo_pairs \
+    --output_dir ./lora \
+    --num_epochs 3 \
+    --batch_size 16 \
+    --micro_batch_size 2 \
+    --learning_rate 1e-5 \
+    --lora_r 16 \
+    --lora_alpha 16 \
+    --lora_dropout 0.05 \
+    # --lora_target_modules ["embed_tokens", "q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj", "lm_head"] \
+    --lora_target_modules ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj", "lm_head"] \
+    --lr_scheduler 'linear' \
+    --warmup_ratio 0.1 \
+    --cutoff_len 4096 \
+```
