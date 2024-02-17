@@ -89,7 +89,7 @@ Below is an instruction that describes a task, paired with an input that provide
 {title}
 ```
 
-### 3-2. 입력과 출력 완성
+#### 3-2. 입력과 출력 완성
 - 위 템플릿에 따라서 만들어진 데이터 예시는 다음과 같습니다.
 - 모델의 입력
 ```
@@ -106,7 +106,41 @@ Below is an instruction that describes a task, paired with an input that provide
 추경호 중기 수출지원 총력 무역금융 40조 확대
 ```
 
-### 4. 실제 학습 전, 후 비교
+### 4. Merge
+```
+!wget https://raw.githubusercontent.com/ukairia777/LLM-Finetuning-tutorial/main/merge.py
+
+!python merge.py \
+    --base_model_name_or_path beomi/llama-2ko-7b \
+    --peft_model_path ./title-generator/checkpoint-2000 \
+    --output_dir ./output_dir
+```
+
+
+### 5. Inference
+- 학습한 모델을 불러와서 테스트합니다.
+```
+import torch.nn as nn
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model = AutoModelForCausalLM.from_pretrained('./output_dir')
+tokenizer = AutoTokenizer.from_pretrained('./output_dir')
+
+model.eval()
+inputs = tokenizer(input_text, return_tensors="pt")
+model = nn.DataParallel(model)
+model.cuda()
+
+eos_token_id = tokenizer.eos_token_id
+
+with torch.no_grad():
+    outputs = model.module.generate(input_ids=inputs["input_ids"].to("cuda"), max_new_tokens=512, eos_token_id=eos_token_id)
+    print(tokenizer.batch_decode(outputs.detach().cpu().numpy(), skip_special_tokens=True)[0])
+```
+
+
+### 6. 실제 학습 전, 후 비교
 - 다음은 2000 step(약 1 Epoch)을 학습하고나서 llama-2-ko-7b의 출력 결과 비교입니다.
 - 입력은 다음과 같았습니다.
 - 모델의 입력은 `### 제목:`까지 주어져야 합니다. 그래야만 모델이 제목을 작성할 차례임을 인지합니다.
@@ -119,16 +153,37 @@ Below is an instruction that describes a task, paired with an input that provide
 ### 제목:
 ```
 
-#### 4-1. 기본 모델
+#### 6-1. 기본 모델
 - 제목이라기에는 다소 어색한 평문을 생성.
 ```
 주말 포근한 날씨 속에 전국 유명산과 유원지, 명소 등에 봄 정취를 느끼려는 나들이객 발길이 이어졌습니다.
 ```
 
-#### 4-2. 튜닝된 모델
+#### 6-2. 튜닝된 모델
 - 뉴스 기사 제목과 매우 유사한 형태의 텍스트를 생성.
 ```
 범의 전령 매화부터 유채꽃까지... 전국 유명산·유원지 북적
+```
+
+### 7. Huggingface Submit
+```
+from huggingface_hub import HfApi
+api = HfApi()
+username = "허깅페이스 ID"
+
+MODEL_NAME = 'llama-2ko-7b-title-generator'
+
+api.create_repo(
+    token="허깅페이스 토큰",
+    repo_id=f"{username}/{MODEL_NAME}",
+    repo_type="model"
+)
+
+api.upload_folder(
+    token="허깅페이스 토큰",
+    repo_id=f"{username}/{MODEL_NAME}",
+    folder_path="merged",
+)
 ```
 
 ## DPO
