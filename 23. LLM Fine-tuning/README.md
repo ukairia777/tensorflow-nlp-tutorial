@@ -10,7 +10,7 @@ pip install -r requirements.txt
 ## SFT-LoRA
 ### 1. 학습 스크립트
 ```
-!torchrun --nproc_per_node=4 --master_port=1234 sft-trainer.py \
+!torchrun sft-trainer.py \
     --base_model beomi/llama-2-ko-7b \
     --data-path daekeun-ml/naver-news-summarization-ko \
     --output_dir ./title-generator \
