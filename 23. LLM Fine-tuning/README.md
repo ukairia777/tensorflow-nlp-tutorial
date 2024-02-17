@@ -51,7 +51,7 @@ Below is an instruction that describes a task, paired with an input that provide
 
 #### 2-2. 입력과 출력 완성
 - 허깅페이스에 있는 [Bingsu/ko_alpaca_data](https://huggingface.co/datasets/Bingsu/ko_alpaca_data) 데이터셋을 보면 데이터가 instruction, input, output 열이 존재하는 것을 볼 수 있습니다.
-- 위 템플릿에 따라서 만들어진 데이터는 다음과 같습니다.
+- 위 템플릿에 따라서 만들어진 데이터 예시는 다음과 같습니다.
 - 모델의 입력
 ```
 Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
@@ -90,9 +90,7 @@ Below is an instruction that describes a task, paired with an input that provide
 ```
 
 ### 3-2. 입력과 출력 완성
-- 허깅페이스에 있는 [daekeun-ml/naver-news-summarization-ko](https://huggingface.co/datasets/daekeun-ml/naver-news-summarization-ko) 
-- 위 템플릿에 따라서 만들어진 데이터는 다음과 같습니다.
-
+- 위 템플릿에 따라서 만들어진 데이터 예시는 다음과 같습니다.
 - 모델의 입력
 ```
 당신은 주어진 본문으로부터 적절한 제목을 생성하는 제목 생성기입니다. 본문이 주어지면 제목을 만드세요.
