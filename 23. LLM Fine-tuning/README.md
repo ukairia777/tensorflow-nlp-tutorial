@@ -6,7 +6,7 @@
 pip install -r requirements.txt
 ```
 
-## SFT
+## SFT-LoRA
 ```
 !torchrun --nproc_per_node=4 --master_port=1234 sft-trainer.py \
     --base_model beomi/llama-2-ko-7b \
