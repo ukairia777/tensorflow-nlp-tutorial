@@ -130,6 +130,41 @@ Below is an instruction that describes a task, paired with an input that provide
 ```
 범의 전령 매화부터 유채꽃까지... 전국 유명산·유원지 북적
 ```
+### 5. Test
+```
+
+```
+
+### 6. Merge
+```
+!wget https://raw.githubusercontent.com/ukairia777/LLM-Finetuning-tutorial/main/merge.py
+
+!python merge.py \
+    --base_model_name_or_path beomi/llama-2ko-7b \
+    --peft_model_path ./title-generator/checkpoint-2000 \
+    --output_dir ./output_dir
+```
+
+### 7. Huggingface Submit
+```
+from huggingface_hub import HfApi
+api = HfApi()
+username = "허깅페이스 ID"
+
+MODEL_NAME = 'llama-2ko-7b-title-generator'
+
+api.create_repo(
+    token="허깅페이스 토큰",
+    repo_id=f"{username}/{MODEL_NAME}",
+    repo_type="model"
+)
+
+api.upload_folder(
+    token="허깅페이스 토큰",
+    repo_id=f"{username}/{MODEL_NAME}",
+    folder_path="merged",
+)
+```
 
 ## DPO
 ```
