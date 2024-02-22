@@ -8,6 +8,9 @@ from peft import LoraConfig, get_peft_model
 from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
 from trl import DPOTrainer
 import bitsandbytes as bnb
+import wandb
+
+wandb.init(mode="disabled")
 
 def find_all_linear_names(model):
     cls = bnb.nn.Linear4bit
@@ -97,6 +100,7 @@ def train(
     pad = tokenizer.pad_token_id
     print("pre-trained model's BOS EOS and PAD token id:",bos,eos,pad," => It should be 1 2 None")
 
+    # Qwen 등 padding token이 없는 모델의 경우
     # tokenizer.pad_token_id = 0
     tokenizer.padding_side = "right"
 
@@ -142,8 +146,8 @@ def train(
         r=lora_r,
         lora_alpha=lora_alpha,
         lora_dropout=lora_dropout,
-        # target_modules=lora_target_modules,
-        target_modules=find_all_linear_names(model),
+        target_modules=lora_target_modules,
+        # target_modules=find_all_linear_names(model),
         bias="none",
         task_type="CAUSAL_LM",
     )
