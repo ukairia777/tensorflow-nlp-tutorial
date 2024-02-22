@@ -1,5 +1,6 @@
 - 구글의 Colab은 LLM을 튜닝하기에는 현실적으로 리소스 문제가 있습니다.
 - [runpod](https://www.runpod.io/console/gpu-cloud) 서비스를 사용하기를 권장합니다.
+- 딥스피드를 이용한 학습은 [라마팩토리를 간단히 정리해놓은 repo](https://github.com/ukairia777/LLaMA-Factory) 참고.
 
 ```
 !wget https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/23.%20LLM%20Fine-tuning/sft-trainer.py
@@ -163,7 +164,7 @@ with torch.no_grad():
 #### 6-2. 튜닝된 모델
 - 뉴스 기사 제목과 매우 유사한 형태의 텍스트를 생성.
 ```
-범의 전령 매화부터 유채꽃까지... 전국 유명산·유원지 북적
+봄의 전령 매화부터 유채꽃까지... 전국 유명산·유원지 북적
 ```
 
 ### 7. Huggingface Submit
