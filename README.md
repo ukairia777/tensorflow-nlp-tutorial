@@ -1,7 +1,6 @@
 # Tensorflow-NLP-tutorial
 
-A list of NLP(Natural Language Processing) tutorials built on Tensorflow 2.0.
-
+- A list of NLP(Natural Language Processing) tutorials built on Tensorflow 2.0.
 - I've launched a PyTorch tutorial! Check it out through this link [link](https://github.com/ukairia777/pytorch-nlp-tutorial).
 
 위키독스 **딥 러닝을 이용한 자연어 처리 입문** 의 자연어 처리 튜토리얼 저장소입니다.  
