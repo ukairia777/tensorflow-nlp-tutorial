@@ -4,8 +4,7 @@
 - I've launched a PyTorch tutorial! Check it out through this [link](https://github.com/ukairia777/pytorch-nlp-tutorial).
 
 이곳은 위키독스 **딥 러닝을 이용한 자연어 처리 입문** 의 자연어 처리 튜토리얼 저장소입니다.  
-기본적으로 딥 러닝 프레임워크 Tensorflow 2.0+을 사용하고 있습니다.  
-
+딥 러닝 프레임워크 Tensorflow 2.0+을 사용하고 있습니다.  
 만약 파이토치 튜토리얼을 찾으신다면 [링크(클릭!)](https://github.com/ukairia777/pytorch-nlp-tutorial)에서 확인하실 수 있습니다.
 
 <img src="https://wikidocs.net/images/page/37127/%ED%91%9C%EC%A7%80.png" width="250">
